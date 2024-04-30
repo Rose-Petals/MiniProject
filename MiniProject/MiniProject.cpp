@@ -389,8 +389,9 @@ void printByAddressZip(record* data, int size, int look) {
         cout << "No matching zip codes found\n";
 }
 
+/*
 void swapRecords(record* a, record* b) {
-    /*record* temp = new record();
+    record* temp = new record();
     temp->setDepartment(a->getDepartment());
     temp->setCity(a->getCity());
     temp->setState(a->getState());
@@ -418,8 +419,9 @@ void swapRecords(record* a, record* b) {
     b->setStreetNum(temp->getStreetNum());
     b->setZip(temp->getZip());
 
-    delete temp;*/
+    delete temp;
 }
+*/
 
 void sortByID(record*& data, int size) {
     record * temp = new record();
