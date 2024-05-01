@@ -115,7 +115,7 @@ public:
             cout << a.getState();
         cout << "Zip Code: " << a.getZip() << endl;
     }
-    
+
     void print() {
         cout << "ID: " << aID << endl;
         cout << "Street Number: " << street_number << endl;
@@ -137,8 +137,8 @@ public:
         cout << "Zip Code: " << zip_code << endl;
         cout << "Counter: " << matchedAddresses << endl;
     }
-    
-    
+
+
 
 };
 
@@ -201,7 +201,7 @@ public:
             cout << e.getFullName();
         cout << " Department: " << e.getDepartment() << endl;
     }
-    
+
     void print() {
         cout << "ID: " << aID << endl;
         cout << "Full Name: ";
@@ -212,8 +212,8 @@ public:
         cout << "Department: " << department << endl;
         cout << "Counter: " << numEmployees << endl;
     }
-    
-    
+
+
 
 };
 
@@ -345,14 +345,12 @@ int readDataFromFile(char* filename, int size, employee*& arr) {
 }
 
 void combineInfo(employee* emp, address* add, record*& data, int emLen, int adSize, int size) {
-    
     for (int i = 0; i < emLen; i++) {
         for (int k = 0; k < adSize; k++) {
             data[i].employee::setID(emp[i].getID());
             data[i].setFullName(emp[i].getFullName());
             data[i].setDepartment(emp[i].getDepartment());
             if (emp[i].getID() == add[k].getID()) {
-                
                 data[i].address::setID(add[k].getID());
                 data[i].setStreetNum(add[k].getStreetNum());
                 data[i].setStreetName(add[k].getStreetName());
@@ -389,71 +387,46 @@ void printByAddressZip(record* data, int size, int look) {
         cout << "No matching zip codes found\n";
 }
 
-/*
-void swapRecords(record* a, record* b) {
+
+void swapRecords(record& a, record& b) {
     record* temp = new record();
-    temp->setDepartment(a->getDepartment());
-    temp->setCity(a->getCity());
-    temp->setState(a->getState());
-    temp->setFullName(a->getFullName());
-    temp->employee::setID(a->employee::getID());
-    temp->setStreetName(a->getStreetName());
-    temp->setStreetNum(a->getStreetNum());
-    temp->setZip(a->getZip());
+    temp->setDepartment(a.getDepartment());
+    temp->setCity(a.getCity());
+    temp->setState(a.getState());
+    temp->setFullName(a.getFullName());
+    temp->employee::setID(a.employee::getID());
+    temp->setStreetName(a.getStreetName());
+    temp->setStreetNum(a.getStreetNum());
+    temp->setZip(a.getZip());
 
-    a->setDepartment(b->getDepartment());
-    a->setCity(b->getCity());
-    a->setState(b->getState());
-    a->setFullName(b->getFullName());
-    a->employee::setID(b->employee::getID());
-    a->setStreetName(b->getStreetName());
-    a->setStreetNum(b->getStreetNum());
-    a->setZip(b->getZip());
+    a.setDepartment(b.getDepartment());
+    a.setCity(b.getCity());
+    a.setState(b.getState());
+    a.setFullName(b.getFullName());
+    a.employee::setID(b.employee::getID());
+    a.setStreetName(b.getStreetName());
+    a.setStreetNum(b.getStreetNum());
+    a.setZip(b.getZip());
 
-    b->setDepartment(temp->getDepartment());
-    b->setCity(temp->getCity());
-    b->setState(temp->getState());
-    b->setFullName(temp->getFullName());
-    b->employee::setID(temp->employee::getID());
-    b->setStreetName(temp->getStreetName());
-    b->setStreetNum(temp->getStreetNum());
-    b->setZip(temp->getZip());
+    b.setDepartment(temp->getDepartment());
+    b.setCity(temp->getCity());
+    b.setState(temp->getState());
+    b.setFullName(temp->getFullName());
+    b.employee::setID(temp->employee::getID());
+    b.setStreetName(temp->getStreetName());
+    b.setStreetNum(temp->getStreetNum());
+    b.setZip(temp->getZip());
 
     delete temp;
 }
-*/
+
 
 void sortByID(record*& data, int size) {
-    record * temp = new record();
+    record* temp = new record();
     for (int i = 0; i < size; i++) {
         for (int j = 1; j < size; j++) {
             if (data[j - 1].employee::getID() > data[j].employee::getID()) {
-                temp->setDepartment(data[j - 1].getDepartment());
-                temp->setCity(data[j - 1].getCity());
-                temp->setState(data[j - 1].getState());
-                temp->setFullName(data[j - 1].getFullName());
-                temp->employee::setID(data[j - 1].employee::getID());
-                temp->setStreetName(data[j - 1].getStreetName());
-                temp->setStreetNum(data[j - 1].getStreetNum());
-                temp->setZip(data[j - 1].getZip());
-
-                data[j - 1].setDepartment(data[j].getDepartment());
-                data[j - 1].setCity(data[j].getCity());
-                data[j - 1].setState(data[j].getState());
-                data[j - 1].setFullName(data[j].getFullName());
-                data[j - 1].employee::setID(data[j].employee::getID());
-                data[j - 1].setStreetName(data[j].getStreetName());
-                data[j - 1].setStreetNum(data[j].getStreetNum());
-                data[j - 1].setZip(data[j].getZip());
-
-               data[j].setDepartment(temp->getDepartment());
-               data[j].setCity(temp->getCity());
-               data[j].setState(temp->getState());
-               data[j].setFullName(temp->getFullName());
-               data[j].employee::setID(temp->employee::getID());
-               data[j].setStreetName(temp->getStreetName());
-               data[j].setStreetNum(temp->getStreetNum());
-               data[j].setZip(temp->getZip());
+                swapRecords(data[j - 1], data[j]);
 
             }
         }
@@ -466,32 +439,7 @@ void sortByZip(record* data, int size) {
     for (int i = 0; i < size; i++) {
         for (int j = 1; j < size; j++) {
             if (data[j - 1].getZip() > data[j].getZip()) {
-                temp->setDepartment(data[j - 1].getDepartment());
-                temp->setCity(data[j - 1].getCity());
-                temp->setState(data[j - 1].getState());
-                temp->setFullName(data[j - 1].getFullName());
-                temp->employee::setID(data[j - 1].employee::getID());
-                temp->setStreetName(data[j - 1].getStreetName());
-                temp->setStreetNum(data[j - 1].getStreetNum());
-                temp->setZip(data[j - 1].getZip());
-
-                data[j - 1].setDepartment(data[j].getDepartment());
-                data[j - 1].setCity(data[j].getCity());
-                data[j - 1].setState(data[j].getState());
-                data[j - 1].setFullName(data[j].getFullName());
-                data[j - 1].employee::setID(data[j].employee::getID());
-                data[j - 1].setStreetName(data[j].getStreetName());
-                data[j - 1].setStreetNum(data[j].getStreetNum());
-                data[j - 1].setZip(data[j].getZip());
-
-                data[j].setDepartment(temp->getDepartment());
-                data[j].setCity(temp->getCity());
-                data[j].setState(temp->getState());
-                data[j].setFullName(temp->getFullName());
-                data[j].employee::setID(temp->employee::getID());
-                data[j].setStreetName(temp->getStreetName());
-                data[j].setStreetNum(temp->getStreetNum());
-                data[j].setZip(temp->getZip());
+                swapRecords(data[j - 1], data[j]);
 
             }
         }
@@ -591,10 +539,15 @@ int main() {
         case 'd':
         {
             //  cout << employee::numEmployees << endl;
-            cout << "ID   FULL NAME\t\t STREET ADDRESS\t\t       CITY\t\t\tSTATE\t     ZIP\tDEPARTMENT\n";
-            for (int i = 0; i < size; i++)
-                if (data[i].employee::getID() != -1)
-                    print(data[i]);
+            if (dataMade) {
+                cout << "ID   FULL NAME\t\t STREET ADDRESS\t\t       CITY\t\t\tSTATE\t     ZIP\tDEPARTMENT\n";
+                for (int i = 0; i < size; i++)
+                    if (data[i].employee::getID() != -1)
+                        print(data[i]);
+            }
+            else {
+                cout << "Data hasn't been made yet";
+            }
             break;
         }
         case 'e':
@@ -615,7 +568,7 @@ int main() {
             else {
                 cout << "Invalid choice\n";
             }
-            
+
 
             break;
         }
