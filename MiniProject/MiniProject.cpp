@@ -228,19 +228,19 @@ public:
             return "SALES";
             break;
         case CUSTOMER_SERVICE:
-            return "CUST0MER SERVICE";
+            return "CUSTOMER SERVICE";
             break;
         case PRODUCTION:
-            return "PR0DUCTION";
+            return "PRODUCTION";
             break;
         case HUMAN_RESOURCES:
-            return "HUMAN RES0URCES";
+            return "HUMAN RESOURCES";
             break;
         case ACCOUNTING:
-            return "ACC0UNTING";
+            return "ACCOUNTING";
             break;
         case RESEARCH_AND_DEVELOPMENT:
-            return "RESEARCH AND DEVEL0PMENT";
+            return "RESEARCH AND DEVELOPMENT";
             break;
         default:
             return "DEFAULT";
