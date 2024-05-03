@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-
+#include <cstring>
 using namespace std;
 
 class address {
@@ -11,9 +11,10 @@ class address {
     char* city;
     char* state_abbreviation;
     int zip_code;
-    static int matchedAddresses;
+    
 
 public:
+    static int uniqueAddresses;
     address() {
         aID = -1;
         street_number = 0;
@@ -135,9 +136,8 @@ public:
         else
             cout << state_abbreviation << endl;
         cout << "Zip Code: " << zip_code << endl;
-        cout << "Counter: " << matchedAddresses << endl;
+        cout << "Counter: " << uniqueAddresses << endl;
     }
-
 
 
 };
@@ -157,9 +157,9 @@ public:
         aID = -1;
         full_name = nullptr;
         department = DEFAULT;
-    }
-    employee(int i, char* name, DEPARTMENT d) {
         employee::numEmployees++;
+    }
+    employee(int i, char* name, DEPARTMENT d) { 
         aID = i;
         setFullName(name);
         department = d;
@@ -293,12 +293,6 @@ int readDataFromFile(char* filename, int size, address*& arr) {
     while (!input.eof() && i < size) {
         duplicate = false;
         input >> t;
-        for (int k = 0; k < size; k++) {
-            if (arr[k].getID() == t) {
-                duplicate = true;
-                break;
-            }
-        }
         arr[i].setID(t);
         input >> t;
         arr[i].setStreetNum(t);
@@ -311,9 +305,21 @@ int readDataFromFile(char* filename, int size, address*& arr) {
         arr[i].setState(buffer);
         input >> t;
         arr[i].setZip(t);
-        i++;
 
+        duplicate = false;
+
+        for (int j = 0; j < i; j++) {
+            if (strcmp(arr[i].getStreetName(), arr[j].getStreetName()) == 0) {
+                duplicate = true;
+                break;
+            }
+        }
+        if (!duplicate) 
+            address::uniqueAddresses++;
+            
+        i++;
     }
+
     return i;
 }
 
@@ -447,8 +453,9 @@ void sortByZip(record* data, int size) {
     delete temp;
 }
 
+
 int employee::numEmployees = 0;
-int address::matchedAddresses = 0;
+int address::uniqueAddresses = 0;
 int main() {
 
     char addressesFile[100];//
@@ -538,12 +545,13 @@ int main() {
         }
         case 'd':
         {
-            //  cout << employee::numEmployees << endl;
+
             if (dataMade) {
                 cout << "ID   FULL NAME\t\t STREET ADDRESS\t\t       CITY\t\t\tSTATE\t     ZIP\tDEPARTMENT\n";
                 for (int i = 0; i < size; i++)
                     if (data[i].employee::getID() != -1)
                         print(data[i]);
+                cout  << "There are " << address::uniqueAddresses << " addresses, and " <<  employee::numEmployees << " employees" << endl;
             }
             else {
                 cout << "Data hasn't been made yet";
